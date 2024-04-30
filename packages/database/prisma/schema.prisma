@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum BankProviders  {
+hdfc
+axis
+sbi
+}
+
+enum OnRampStatus {
+  Processing
+  Failed
+  Success
+}
+
+
+model User {
+  id                 String               @id @default(cuid())
+  name               String?
+  email              String               @unique
+  phonenumber        String?              @unique
+  emailVerified      DateTime?
+  image              String?
+  accounts           Account[]
+  balance            Balance[]
+  onRampTransactions onRampTransactions[]
+  sessions           Session[]
+  password           String?
+  receivedTransfers  p2pTransfers[] @relation("TransferToUser")
+  SentTransfers  p2pTransfers[] @relation("TransferFromUser")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Balance {        
+  id     String @id @default(cuid())
+  userId String @unique
+  amount Int
+  locked Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model onRampTransactions {        
+  id        String       @id @default(cuid())
+  status    OnRampStatus
+  token     String       @unique
+  provider  String
+  amount    Int
+  startTime DateTime
+  userId    String
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model p2pTransfers{
+  id String @id @default(cuid())
+  toUserId String
+  fromUserId String
+  Amount Int
+  toUser User @relation("TransferToUser",fields: [toUserId],references: [id])
+  fromUser User @relation("TransferFromUser",fields: [fromUserId], references: [id])
+  timestamp DateTime @default(now())
+}
