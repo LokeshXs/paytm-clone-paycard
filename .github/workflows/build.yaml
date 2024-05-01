@@ -27,4 +27,4 @@ jobs:
         run: npm run db:generate
 
       - name: Run Build
-        run: npm run build
+        run: NEXT_PUBLIC_AUTH_SECRET=${{secrets.AUTH_SECRET}} npm run build
