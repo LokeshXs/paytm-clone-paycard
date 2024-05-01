@@ -3,7 +3,7 @@
 import AddMoneyform from "@repo/ui/addmoneyform";
 import { auth } from "../../../../auth";
 import db from "../../../lib/db";
-import { addMoney } from "../../../actions/addMoney";
+import  {addMoney } from "../../../actions/addMoney";
 import { formattCurrency } from "@repo/ui/formatcurrency";
 import TransactionTabs from "@repo/ui/transactionTabs";
 export default async function DashboardView() {
