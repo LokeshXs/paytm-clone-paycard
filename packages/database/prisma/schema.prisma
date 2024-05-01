@@ -110,6 +110,7 @@ model p2pTransfers{
   toUserId String
   fromUserId String
   Amount Int
+  status String @default("Success")
   toUser User @relation("TransferToUser",fields: [toUserId],references: [id])
   fromUser User @relation("TransferFromUser",fields: [fromUserId], references: [id])
   timestamp DateTime @default(now())

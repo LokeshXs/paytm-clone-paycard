@@ -3,7 +3,6 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "start-user-app":"cd ./apps/web && npm run dev",
     "lint": "turbo lint",
     "type-check": "turbo type-check",
     "clean": "turbo clean",

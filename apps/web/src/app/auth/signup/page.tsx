@@ -9,7 +9,7 @@ import { signIn } from "../../../../auth";
 
 export default function SignUpPage() {
   return (
-    <main className="p-12 max-md:p-6  flex justify-center items-center min-h-screen ">
+    <main className="p-12 max-md:p-6 max-sm:p-4  flex justify-center items-center min-h-screen ">
       <div className="max-w-[1400px] w-full  ">
         <div className=" max-w-[1200px] w-full mx-auto flex max-md:flex-col-reverse  gap-6 max-lg:gap-12 bg-muted rounded-3xl drop-shadow-2xl">
           <div className="w-[500px] max-md:w-full min-w-[260px]  flex flex-col justify-center items-center gap-12  p-6 ">
@@ -18,7 +18,7 @@ export default function SignUpPage() {
             </h1>
             <Image src="/signup.svg" alt="Signup" width={400} height={400} />
           </div>
-          <div className="flex-1 bg-white rounded-3xl  p-12 max-lg:p-6 space-y-8">
+          <div className="flex-1 bg-white rounded-3xl  p-12 max-lg:p-6 max-sm:p-2 space-y-8">
             <h2 className="text-2xl text-center font-semibold ">
               Create Account
             </h2>
@@ -26,7 +26,7 @@ export default function SignUpPage() {
             <div className="flex flex-col items-center justify-center gap-4 relative ">
               <Separator />
               <p>Or continue with</p>
-              <div className="flex max-sm:flex-col gap-6 max-sm:gap-4 max-sm:w-full">
+              <div className="flex ">
                 <form
                   action={async () => {
                     "use server";

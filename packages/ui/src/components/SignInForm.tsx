@@ -61,7 +61,7 @@ export default function SignInForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 max-w-[400px] w-full  mx-auto"
+        className="space-y-6 max-w-[400px] min-w-[300px] max-sm:min-w-[260px] w-full  mx-auto"
       >
         <FormField
           control={form.control}

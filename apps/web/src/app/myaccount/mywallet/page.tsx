@@ -1,3 +1,5 @@
+
+
 import AddMoneyform from "@repo/ui/addmoneyform";
 import { auth } from "../../../../auth";
 import db from "../../../lib/db";
@@ -26,15 +28,9 @@ export default async function DashboardView() {
             <h2 className="text-2xl font-semibold">Add Money</h2>
             <AddMoneyform action={addMoney} />
           </div>
-          <div className="space-y-6 py-6 px-8 border-[1px]  w-full rounded-2xl  ">
-            <h2 className="text-2xl font-semibold">My Balance</h2>
+          <div className="space-y-6 py-6 px-8 border-[1px] border-primary  w-full rounded-2xl  ">
+            <h2 className="text-2xl font-semibold text-primary" >My Balance</h2>
             <div className="space-y-4">
-              <div>
-                <h6 className="text-lg text-muted-foreground">
-                  Unlocked Balance
-                </h6>
-                <p className="text-3xl font-medium">Rs. 2000.00</p>
-              </div>
               <div>
                 <h6 className="text-lg text-muted-foreground">
                   Locked Balance

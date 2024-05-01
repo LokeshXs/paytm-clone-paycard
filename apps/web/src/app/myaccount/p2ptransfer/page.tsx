@@ -1,7 +1,5 @@
 import TransferAmountForm from "@repo/ui/transferform";
 import TransferMoney from "../../../actions/transferMoney";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@repo/ui/tabs";
-import TransactionCard from "@repo/ui/transactioncard";
 import TransactionTabs from "@repo/ui/transactionTabs";
 
 export default function P2PTransfer(){
@@ -16,8 +14,8 @@ export default function P2PTransfer(){
         <TransferAmountForm action={TransferMoney} />
         </div>
 
-        <div className="flex-1">
-        <div className=" max-w-[600px] w-full py-6 px-8 rounded-2xl space-y-6 ">
+        <div className="flex-1 ">
+        <div className=" w-full py-6 px-8 rounded-2xl space-y-6 flex flex-col items-center ">
             <h2 className="text-2xl font-semibold text-primary">My Transactions</h2>
               <TransactionTabs defaultSelection="p2p" />
           </div>
