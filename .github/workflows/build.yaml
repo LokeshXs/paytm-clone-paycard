@@ -10,6 +10,7 @@ jobs:
   build: 
     name: Build the project
     runs-on: ubuntu-latest
+    environment: DATABASE_URL
     steps:
       - name: clone repository
         uses: actions/checkout@v3
@@ -23,7 +24,9 @@ jobs:
         run: npm install
 
       - name: Generate prisma client
-        run: cd packages/database && npx prisma generate && cd../..
+        run: npm run db:generate
 
       - name: Run Build
         run: npm run build
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
