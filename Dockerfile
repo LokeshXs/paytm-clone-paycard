@@ -9,19 +9,15 @@ COPY turbo.json ./
 COPY apps/web/package.json ./apps/web/package.json
 COPY apps/webhook/package.json ./apps/webhook/package.json
 COPY packages/database/package.json ./apps/packages/database/package.json
+COPY packages/database/prisma       ./apps/packages/database/prisma
 
 RUN npm install
 
 COPY apps ./apps
 COPY packages ./packages
 
-
 RUN cd packages/database && npx prisma generate && cd ../..
 
-
-
 EXPOSE 3000
-EXPOSE 3001
 
-
-CMD ["npm","run","dev"]
+CMD ["npm","run","dev:docker"]

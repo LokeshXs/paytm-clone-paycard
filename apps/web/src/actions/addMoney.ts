@@ -36,8 +36,8 @@ export async function addMoney(values: z.infer<typeof addMoneyFormSchema>) {
         amount: amountInNumber,
         startTime: new Date(),
         userId: userId!,
-        provider: bank,
         token: uuidv4(),
+        paymentCardId: bank,
       },
     });
 
@@ -57,6 +57,7 @@ export async function addMoney(values: z.infer<typeof addMoneyFormSchema>) {
       });
     }, 5000);
   } catch (error) {
+    console.log(error);
     return {
       status: "error",
       message: "Something went wrong!",

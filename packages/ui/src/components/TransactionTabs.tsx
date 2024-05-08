@@ -1,6 +1,3 @@
-
-
-
 import TransactionCard from "./TransactionCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import db from "@repo/web/db";
@@ -12,7 +9,6 @@ type Props = {
 };
 
 export default async function TransactionTabs({ defaultSelection }: Props) {
-
   const session = await auth();
 
   const onRampTransactions = await db.onRampTransactions.findMany({
@@ -21,9 +17,9 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
     },
   });
 
-  const sortedOnRampTransactions = onRampTransactions.sort((a,b)=> {
-    return  new Date(b.startTime).getTime() - new Date(a.startTime).getTime() ;
-  })
+  const sortedOnRampTransactions = onRampTransactions.sort((a, b) => {
+    return new Date(b.startTime).getTime() - new Date(a.startTime).getTime();
+  });
 
   const p2pTransactions = await db.p2pTransfers.findMany({
     where: {
@@ -38,11 +34,9 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
     },
   });
 
-  const sortedP2pTransactions = p2pTransactions.sort((a,b)=> {
-    return  new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime() ;
-  })
-
-
+  const sortedP2pTransactions = p2pTransactions.sort((a, b) => {
+    return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+  });
 
   const p2pSentTransactions = await db.p2pTransfers.findMany({
     where: {
@@ -50,10 +44,9 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
     },
   });
 
-  const sortedP2pSentTransactions = p2pSentTransactions.sort((a,b)=> {
-    return  new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime() ;
-  })
-
+  const sortedP2pSentTransactions = p2pSentTransactions.sort((a, b) => {
+    return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+  });
 
   const p2pReceivedTransactions = await db.p2pTransfers.findMany({
     where: {
@@ -61,13 +54,13 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
     },
   });
 
-  const sortedP2pReceivedTransactions = p2pReceivedTransactions.sort((a,b)=> {
-    return  new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime() ;
-  })
+  const sortedP2pReceivedTransactions = p2pReceivedTransactions.sort((a, b) => {
+    return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+  });
 
   return (
-    <Tabs defaultValue={defaultSelection} className="w-fit">
-      <TabsList className="bg-primary">
+    <Tabs defaultValue={defaultSelection} className="w-full">
+      <TabsList className="bg-primary w-full justify-around">
         <TabsTrigger
           value="all"
           className="data-[state=active]:bg-secondary text-secondary data-[state=active]:text-primary  "
@@ -96,7 +89,7 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
           Received
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="all">
+      <TabsContent value="all" className=" max-h-[600px] overflow-y-auto">
         <ul className="space-y-6">
           {sortedOnRampTransactions.map((transactionDetails) => (
             <li key={transactionDetails.id}>
@@ -105,7 +98,7 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
                 status={transactionDetails.status}
                 date={transactionDetails.startTime}
                 amount={transactionDetails.amount}
-                provider={transactionDetails.provider}
+                cardId={transactionDetails.paymentCardId || ""}
               />
             </li>
           ))}
@@ -113,18 +106,37 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
       </TabsContent>
       <TabsContent value="p2p">
         <ul className="space-y-6">
-          {sortedP2pTransactions.map((transactionDetails) => (
-            <li key={transactionDetails.id}>
-              <P2PTransactionCard
-                date={transactionDetails.timestamp}
-                amount={transactionDetails.Amount}
-                fromUserId={transactionDetails.fromUserId}
-                toUserId={transactionDetails.toUserId}
-                userId={session?.userId || ""}
-                status={transactionDetails.status}
-              />
-            </li>
-          ))}
+          {sortedP2pTransactions.map((transactionDetails) => {
+            if (session?.userId === transactionDetails.toUserId) {
+              if (transactionDetails.status === "Success") {
+                return (
+                  <li key={transactionDetails.id}>
+                    <P2PTransactionCard
+                      date={transactionDetails.timestamp}
+                      amount={transactionDetails.Amount}
+                      fromUserId={transactionDetails.fromUserId}
+                      toUserId={transactionDetails.toUserId}
+                      userId={session?.userId || ""}
+                      status={transactionDetails.status}
+                    />
+                  </li>
+                );
+              }
+            } else {
+              return (
+                <li key={transactionDetails.id}>
+                  <P2PTransactionCard
+                    date={transactionDetails.timestamp}
+                    amount={transactionDetails.Amount}
+                    fromUserId={transactionDetails.fromUserId}
+                    toUserId={transactionDetails.toUserId}
+                    userId={session?.userId || ""}
+                    status={transactionDetails.status}
+                  />
+                </li>
+              );
+            }
+          })}
         </ul>
       </TabsContent>
       <TabsContent value="sent">
@@ -145,18 +157,37 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
       </TabsContent>
       <TabsContent value="received">
         <ul className="space-y-6">
-          {sortedP2pReceivedTransactions.map((transactionDetails) => (
-            <li key={transactionDetails.id}>
-              <P2PTransactionCard
-                date={transactionDetails.timestamp}
-                amount={transactionDetails.Amount}
-                fromUserId={transactionDetails.fromUserId}
-                toUserId={transactionDetails.toUserId}
-                userId={session?.userId || ""}
-                status={transactionDetails.status}
-              />
-            </li>
-          ))}
+          {sortedP2pReceivedTransactions.map((transactionDetails) => {
+            if (session?.userId === transactionDetails.toUserId) {
+              if (transactionDetails.status === "Success") {
+                return (
+                  <li key={transactionDetails.id}>
+                    <P2PTransactionCard
+                      date={transactionDetails.timestamp}
+                      amount={transactionDetails.Amount}
+                      fromUserId={transactionDetails.fromUserId}
+                      toUserId={transactionDetails.toUserId}
+                      userId={session?.userId || ""}
+                      status={transactionDetails.status}
+                    />
+                  </li>
+                );
+              }
+            } else {
+              return (
+                <li key={transactionDetails.id}>
+                  <P2PTransactionCard
+                    date={transactionDetails.timestamp}
+                    amount={transactionDetails.Amount}
+                    fromUserId={transactionDetails.fromUserId}
+                    toUserId={transactionDetails.toUserId}
+                    userId={session?.userId || ""}
+                    status={transactionDetails.status}
+                  />
+                </li>
+              );
+            }
+          })}
         </ul>
       </TabsContent>
     </Tabs>

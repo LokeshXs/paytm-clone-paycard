@@ -30,3 +30,5 @@ jobs:
         run: npm run build
         env:
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+
+  
