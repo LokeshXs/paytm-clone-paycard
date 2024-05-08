@@ -13,12 +13,12 @@ export default async function Page() {
         <section className="flex items-center gap-12 min-h-screen  bg-background max-lg:flex-col max-lg:pt-20 max-sm:pt-12  max-lg:gap-20 max-sm:gap-6">
           <div className="flex-[1.5] space-y-6">
             <h1 className="text-7xl max-xl:text-6xl max-sm:text-5xl font-bold text-primary leading-tight">
-              The New Era of Gloabl Payments
+              The New Era of Gloabl Payments 
             </h1>
             <p className="text-lg max-sm:text-base text-muted-foreground leading-normal">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               Corrupti, reiciendis quas libero omnis rerum corporis mollitia
-              consequatur neque suscipit incidunt? ?New change
+              consequatur neque suscipit incidunt? ?New change Lokesh
             </p>
             <Button className="bg-secondary text-primary hover:bg-secondary">
               Read More
