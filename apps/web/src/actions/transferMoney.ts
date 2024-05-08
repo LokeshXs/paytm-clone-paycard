@@ -31,6 +31,8 @@ export default async function TransferMoney(
       };
     }
 
+    
+
     // 3.) check if the "to" user exist
 
     const toUser = await db.user.findUnique({
@@ -38,6 +40,22 @@ export default async function TransferMoney(
         phonenumber: validatedValues.data.phonenumber,
       },
     });
+
+  const fromUser = await db.user.findUnique({
+    where:{
+      id:session.userId
+    }
+  })
+
+
+    // 3.1) check if the user is transfering the money himself
+
+    if(toUser?.phonenumber === fromUser?.phonenumber){
+      return {
+        status: "error",
+        message: "Cannot tranfer money to yourself",
+      };
+    }
 
     if (!toUser) {
       return {
@@ -89,6 +107,8 @@ export default async function TransferMoney(
           },
         });
 
+        
+
         await trans.p2pTransfers.create({
           data: {
             toUserId: toUser.id,
@@ -99,6 +119,16 @@ export default async function TransferMoney(
         });
       });
     } catch (err) {
+
+      if (err instanceof Error) {
+        if (err.message === "You do not have enough balance") {
+          return {
+            status: "error",
+            message: "You do not have enough balance",
+          };
+        }
+      }
+
       await db.p2pTransfers.create({
         data: {
           toUserId: toUser.id,
@@ -107,6 +137,8 @@ export default async function TransferMoney(
           status: "Failed",
         },
       });
+
+
 
       return {
         status: "error",
@@ -121,14 +153,7 @@ export default async function TransferMoney(
   } catch (err) {
     console.log(err);
 
-    if (err instanceof Error) {
-      if (err.message === "You do not have enough balance") {
-        return {
-          status: "error",
-          message: "You do not have enough balance",
-        };
-      }
-    }
+    
 
     return {
       status: "error",

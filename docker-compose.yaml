@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "Lokesh@1129"
+
+
+  paytm-clone:
+    image: paytm-clone
+    container_name: paytm-clone
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "DATABASE_URL=postgresql://postgres:postgres@db:5432/cms?schema=public"
+      AUTH_SECRET: "secret"
+
+
+
+

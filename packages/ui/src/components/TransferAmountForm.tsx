@@ -57,20 +57,20 @@ export default function TransferAmountForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8  bg-primary py-4 px-8 rounded-2xl  "
+        className="space-y-8  bg-primary py-4 px-8 rounded-2xl min-w-[300px]  "
       >
         <FormField
           control={form.control}
           name="phonenumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-primary-foreground">
+              <FormLabel className="text-primary-foreground text-base">
                 PhoneNumber
               </FormLabel>
               <FormControl>
                 <Input
                   placeholder="xxxxxxxxxx"
-                  className="bg-background text-primary "
+                  className="bg-background text-primary text-lg "
                   {...field}
                 />
               </FormControl>
@@ -83,11 +83,11 @@ export default function TransferAmountForm({
           name="amount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-primary-foreground">Amount</FormLabel>
+              <FormLabel className="text-primary-foreground text-base">Amount</FormLabel>
               <FormControl>
                 <Input
                   placeholder="xx.xx"
-                  className="bg-background text-primary"
+                  className="bg-background text-primary text-lg"
                   {...field}
                 />
               </FormControl>
@@ -97,7 +97,7 @@ export default function TransferAmountForm({
         />
         <Button
           type="submit"
-          className="bg-secondary text-primary hover:bg-secondary"
+          className="bg-secondary text-primary hover:bg-secondary text-base"
         >
            {isPending ? "In Progress..." : "Send"}
         </Button>

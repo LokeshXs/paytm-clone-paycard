@@ -12,14 +12,14 @@ type TransactionCardProps = {
   status: string;
   date: Date;
   amount: number;
-  provider: string;
+  cardId: string;
 };
 export default function TransactionCard({
   transactionId,
   status,
   date,
   amount,
-  provider,
+  cardId,
 }: TransactionCardProps) {
   console.log(status);
   const [transactionStatus, setTransactionStatus] = useState(status);
@@ -72,7 +72,7 @@ export default function TransactionCard({
   // }
 
   return (
-    <div className="flex items-center justify-between max-w-[400px] w-full bg-muted px-6 py-2 rounded-2xl">
+    <div className="flex items-center justify-around w-full bg-muted px-6 py-2 rounded-2xl">
       <div className="space-y-2 ">
         <p className="text-primary font-semibold text-xl">
           {transactionStatus === "Processing"
@@ -80,18 +80,18 @@ export default function TransactionCard({
             : transactionStatus}
         </p>
         <span className="px-1 py-0.5 inline-block rounded border-[1px]  border-primary text-primary shadow-none text-sm max-w-[100px] truncate">
-          {provider}
+        {`(**** ${cardId.slice(-4)})`}
         </span>
         <p className="text-muted-foreground text-sm">{date.toLocaleString()}</p>
       </div>
       <p
         className={clsx("text-xl font-semibold", {
-          "text-green-500": provider !== "" && transactionStatus === "Success",
+          "text-green-500": cardId !== "" && transactionStatus === "Success",
           "text-muted-foreground":
-            provider !== "" && transactionStatus === "Processing",
+            cardId !== "" && transactionStatus === "Processing",
         })}
       >
-        {provider !== "" && status === "Success" && "+"} {formattedAmount}
+        {cardId !== "" && status === "Success" && "+"} {formattedAmount}
       </p>
     </div>
   );
