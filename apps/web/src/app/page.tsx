@@ -18,7 +18,7 @@ export default async function Page() {
             <p className="text-lg max-sm:text-base text-muted-foreground leading-normal">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               Corrupti, reiciendis quas libero omnis rerum corporis mollitia
-              consequatur neque suscipit incidunt? ?New change Lokesh
+              consequatur neque suscipit incidunt? ?New change Lokesh No change
             </p>
             <Button className="bg-secondary text-primary hover:bg-secondary">
               Read More
