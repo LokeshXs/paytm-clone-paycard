@@ -22,13 +22,13 @@ jobs:
     - name: Build and push Docker user image
       env:
         AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-      uses: docker/build-push-action@v2
-
+      uses: docker/build-push-action@v5
       with:
         context: .
         file: ./docker/Dockerfile.user
         no-cache: true
-        secrets: ${{ secrets.AUTH_SECRET }} 
+        secrets: |
+          "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" 
         push: true
         tags: lokesh1129/paytm-clone-user:latest
 
