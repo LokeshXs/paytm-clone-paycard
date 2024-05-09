@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
