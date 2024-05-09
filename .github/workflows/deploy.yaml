@@ -23,6 +23,7 @@ jobs:
       with:
         context: .
         file: ./docker/Dockerfile.user
+        secrets: ${{ secrets.AUTH_SECRET }}
         push: true
         tags: lokesh1129/paytm-clone-user:latest
 
