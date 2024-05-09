@@ -24,16 +24,16 @@ jobs:
 
     - name: Build and push Docker user image
       uses: docker/build-push-action@v5
-      env:
-        AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
       with:
         context: .
         file: ./docker/Dockerfile.user
         no-cache: true
         secrets: |
-          "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" 
+          AUTH_SECRET=${{ secrets.AUTH_SECRET }} 
         push: true
         tags: lokesh1129/paytm-clone-user:latest
+      env:
+        AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
       
 
     - name: Build and push Docker webhook image
