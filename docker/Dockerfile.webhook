@@ -17,7 +17,7 @@ COPY packages ./packages
 
 RUN npm run db:generate
 
-RUN npm run build-webook-app
+RUN npm run build
 
 EXPOSE 3001
 
