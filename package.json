@@ -7,7 +7,10 @@
     "type-check": "turbo type-check",
     "clean": "turbo clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "dev:docker":"npm run db:generate && npm run dev",
+    "start-user-app":"cd ./apps/web && npm run start",
+    "start-webhook-app":"cd ./apps/webhook && npm run start",
+    "build-webook-app":"cd ./apps/webhook && npm run build && cd ../..",
+    "build-user-app":"cd ./apps/web && npm run build && cd ../..",
     "db:generate": "cd packages/database && npx prisma generate && cd ../.."
   },
   "devDependencies": {
