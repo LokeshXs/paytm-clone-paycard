@@ -6,7 +6,6 @@ COPY package.json ./
 COPY package-lock.json ./
 COPY turbo.json ./
 
-COPY apps/web/package.json ./apps/web/package.json
 COPY apps/webhook/package.json ./apps/webhook/package.json
 COPY packages/database/package.json ./apps/packages/database/package.json
 COPY packages/database/prisma       ./apps/packages/database/prisma
@@ -18,7 +17,7 @@ COPY packages ./packages
 
 RUN npm run db:generate
 
-RUN npm run build
+RUN npm run build-webook-app
 
 EXPOSE 3001
 

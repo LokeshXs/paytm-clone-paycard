@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    environment: DATABASE_URL
     steps:
     - name: Check Out Repo
       uses: actions/checkout@v2
