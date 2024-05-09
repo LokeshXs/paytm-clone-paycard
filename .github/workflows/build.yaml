@@ -10,7 +10,6 @@ jobs:
   build: 
     name: Build the project
     runs-on: ubuntu-latest
-    environment: DATABASE_URL
     steps:
       - name: clone repository
         uses: actions/checkout@v3
@@ -28,7 +27,5 @@ jobs:
 
       - name: Run Build
         run: npm run build
-        env:
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
 
   
