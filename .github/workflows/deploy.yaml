@@ -21,7 +21,7 @@ jobs:
     - name: Build and push Docker user image
       uses: docker/build-push-action@v2
       env:
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+        AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
       with:
         context: .
         file: ./docker/Dockerfile.user
