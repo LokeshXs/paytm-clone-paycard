@@ -5,13 +5,9 @@ on:
     branches:
       - master
 
-env:
-  AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    environment: DATABASE_URL
     steps:
     - name: Check Out Repo
       uses: actions/checkout@v2
@@ -28,14 +24,9 @@ jobs:
         context: .
         file: ./docker/Dockerfile.user
         no-cache: true
-        secrets: |
-          AUTH_SECRET=${{ secrets.AUTH_SECRET }} 
         push: true
         tags: lokesh1129/paytm-clone-user:latest
-      env:
-        AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
       
-
     - name: Build and push Docker webhook image
       uses: docker/build-push-action@v2
       with:
@@ -57,8 +48,8 @@ jobs:
           sudo docker stop paytm-clone-webhook || true
           sudo docker rm paytm-clone-user || true
           sudo docker rm paytm-clone-webhook || true
-          sudo docker network disconnect my_network paytm-clone-user
-          sudo docker network disconnect my_network paytm-clone-webhook
+          sudo docker network disconnect my_network paytm-clone-user || true
+          sudo docker network disconnect my_network paytm-clone-webhook || true
           sudo docker network create my_network
-          sudo docker run -d --name paytm-clone-user --name my_network -e AUTH_SECRET=${{ secrets.AUTH_SECRET }} -e AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }} -e AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }} -e DATABASE_URL=${{ secrets.DATABASE_URL }} -p 3000:3000 lokesh1129/paytm-clone-user:latest
-          sudo docker run -d --name paytm-clone-webhook --name my_network -e DATABASE_URL=${{ secrets.DATABASE_URL }} lokesh1129/paytm-clone-webhook:latest
+          sudo docker run -d --name paytm-clone-user --network my_network -e AUTH_SECRET=${{ secrets.AUTH_SECRET }} -e AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }} -e AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }} -e DATABASE_URL=${{ secrets.DATABASE_URL }} -p 3000:3000 lokesh1129/paytm-clone-user:latest
+          sudo docker run -d --name paytm-clone-webhook --network my_network -e DATABASE_URL=${{ secrets.DATABASE_URL }} lokesh1129/paytm-clone-webhook:latest
