@@ -1,0 +1,24 @@
+FROM node:20
+
+WORKDIR /usr/src/app
+
+COPY package.json ./
+COPY package-lock.json ./
+COPY turbo.json ./
+
+COPY apps/webhook/package.json ./apps/webhook/package.json
+COPY packages/database/package.json ./apps/packages/database/package.json
+COPY packages/database/prisma       ./apps/packages/database/prisma
+
+RUN npm install
+
+COPY apps ./apps
+COPY packages ./packages
+
+RUN npm run db:generate
+
+RUN npm run build-webook-app
+
+EXPOSE 3001
+
+CMD ["npm","run","start-webhook-app"]
