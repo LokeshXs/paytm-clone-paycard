@@ -48,8 +48,10 @@ jobs:
           sudo docker stop paytm-clone-webhook || true
           sudo docker rm paytm-clone-user || true
           sudo docker rm paytm-clone-webhook || true
+
           sudo docker network disconnect paytm-network paytm-clone-user || true
           sudo docker network disconnect paytm-network paytm-clone-webhook || true
           sudo docker network create paytm-network
           sudo docker run -d --name paytm-clone-user --network paytm-network -e AUTH_SECRET=${{ secrets.AUTH_SECRET }} -e AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }} -e AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }} -e DATABASE_URL=${{ secrets.DATABASE_URL }} -p 3000:3000 lokesh1129/paytm-clone-user:latest
           sudo docker run -d --name paytm-clone-webhook --network paytm-network -e DATABASE_URL=${{ secrets.DATABASE_URL }} lokesh1129/paytm-clone-webhook:latest
+
