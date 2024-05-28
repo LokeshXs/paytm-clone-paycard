@@ -6,13 +6,17 @@ import {
   PanelRightOpen,
   Rotate3D,
   Wallet,
+  ArrowLeftRight,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import DashboardLink from "./DashboardLink";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import LogoutButton from "./LogoutButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
+import MyProfile from "./MyProfile";
+import { useSession } from "next-auth/react";
+import { BASE_URL } from "@repo/web/baseurl";
 
 type Props = {
   user: {
@@ -21,8 +25,63 @@ type Props = {
   };
 };
 
-export default function DashboardPanel({ user }: Props) {
+export default async function DashboardPanel({ user }: Props) {
   const [isPanelOpen, setPanelOpen] = useState(true);
+  const session = useSession();
+
+
+  const [profileDetails, setProfileDetails] = useState<{
+
+    name: string | null;
+    email: string;
+    phoneNumber: string | null;
+
+
+  } | null>();
+
+  const [accountDetails, setAccountDetails] = useState<{
+
+    provider: string;
+
+  } | null>();
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const response = await fetch(`${BASE_URL}/api/myprofile`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId:session.data?.userId
+        }),
+      });
+
+      const details = await response.json();
+
+      setProfileDetails(details.data);
+    };
+
+    const fetchOAuthAccountDetails = async () => {
+      const response = await fetch(`${BASE_URL}/api/myoauthaccount`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId:session.data?.userId
+        }),
+      });
+
+      const details = await response.json();
+
+      setAccountDetails(details.data);
+    };
+
+    fetchUserDetails();
+    fetchOAuthAccountDetails();
+  }, []);
+
 
   return (
     <>
@@ -46,6 +105,7 @@ export default function DashboardPanel({ user }: Props) {
           >
             <DashboardLink icon={<Home />} name="Dashboard" />
             <DashboardLink icon={<Wallet />} name="My Wallet" />
+            <DashboardLink icon={<ArrowLeftRight />} name="Transactions" />
             <DashboardLink icon={<Rotate3D />} name="P2P Transfer" />
           </div>
         </div>
@@ -59,7 +119,7 @@ export default function DashboardPanel({ user }: Props) {
               {user?.name?.toUpperCase().slice(0, 2)}
             </AvatarFallback>
           </Avatar>
-          <Button className="w-full">My Profile</Button>
+          <MyProfile userId={session.data?.userId!} accountDetails={accountDetails} profileDetails={profileDetails}  />
           <LogoutButton />
         </div>
       </nav>

@@ -2,18 +2,22 @@ import { Button } from "@repo/ui/button";
 import Image from "next/image";
 import { Volume2 } from "lucide-react";
 import { AnimatedTooltip } from "@repo/ui/animatedtooltip";
-import { FEEDBACK_DATA } from "../lib/data";
+import { FEEDBACK_DATA, testimonials } from "../lib/data";
 import NavBar from "@repo/ui/navbar";
+import InfiniteMovingCards from "@repo/ui/InfiniteMovingCards";
+
+import GlobeContainer from "@repo/ui/GlobeContainer";
+// import { World } from "@repo/ui/Globe";
 
 export default async function Page() {
   return (
     <main className="px-12 max-md:p-4 ">
       <div className="max-w-[1400px] mx-auto ">
         <NavBar />
-        <section className="flex items-center gap-12 min-h-screen  bg-background max-lg:flex-col max-lg:pt-20 max-sm:pt-12  max-lg:gap-20 max-sm:gap-6">
-          <div className="flex-[1.5] space-y-6">
+        <section className="flex items-center gap-12 min-h-screen relative  bg-background max-lg:flex-col max-lg:pt-20 max-sm:pt-12  max-lg:gap-20 max-sm:gap-6">
+          <div className="space-y-6 flex-1">
             <h1 className="text-7xl max-xl:text-6xl max-sm:text-5xl font-bold text-primary leading-tight">
-              The New Era of Gloabl Payments 
+              The New Era of Gloabl Payments
             </h1>
             <p className="text-lg max-sm:text-base text-muted-foreground leading-normal">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -51,26 +55,12 @@ export default async function Page() {
             </div>
           </div>
 
-          <div className="flex-1 relative max-lg:w-full max-lg:flex max-lg:justify-center ">
-            <div className="bg-primary w-fit max-w-[360px] flex px-2 min-h-[140px] items-center rounded-lg  rounded-tr-3xl justify-between absolute z-10 right-0 max-lg:top-2 max-sm:top-0  shadow-lg  ">
-              <p className="text-primary-foreground text-lg max-sm:text-base ">
-                Easy payment for anyone. No rush, stress, or high costs.
-              </p>
-              <div className="bg-secondary px-2 py-6 max-sm:px-1 max-sm:py-4 rounded">
-                <Volume2 />
-              </div>
-            </div>
-            <Image
-              src="/hero-img.png"
-              alt="Lady"
-              width={400}
-              height={400}
-              className="relative z-20"
-            />
+          <div className="flex-[1.5] h-[800px] relative  ">
+            <GlobeContainer />
           </div>
         </section>
 
-        <section className="mb-20 mt-20">
+        <section className=" mt-20">
           <h2 className="text-center text-4xl max-sm:text-3xl font-semibold leading-normal text-primary">
             Get to know more about <br /> "PayCard"
           </h2>
@@ -123,7 +113,9 @@ export default async function Page() {
 
             <div className=" flex gap-6 max-sm:flex-col">
               <div className="max-w-[300px] max-sm:max-w-full bg-background p-4 rounded-2xl space-y-4  ">
-                <h4 className="text-xl font-medium text-primary" >Secure Payments</h4>
+                <h4 className="text-xl font-medium text-primary">
+                  Secure Payments
+                </h4>
                 <Image
                   src="/illustrations/payment.svg"
                   alt="payment illustration"
@@ -132,7 +124,9 @@ export default async function Page() {
                 />
               </div>
               <div className="max-w-[300px] max-sm:max-w-full bg-background p-4 rounded-2xl space-y-4  ">
-                <h4 className="text-xl font-medium text-primary">Global Currencies</h4>
+                <h4 className="text-xl font-medium text-primary">
+                  Global Currencies
+                </h4>
                 <Image
                   src="/illustrations/currencies.svg"
                   alt="payment illustration"
@@ -141,7 +135,9 @@ export default async function Page() {
                 />
               </div>
               <div className="max-w-[300px] max-sm:max-w-full bg-background p-4 rounded-2xl space-y-4  ">
-                <h4 className="text-xl font-medium text-primary" >Seamless money Transfers</h4>
+                <h4 className="text-xl font-medium text-primary">
+                  Seamless money Transfers
+                </h4>
                 <Image
                   src="/illustrations/transfer.svg"
                   alt="payment illustration"
@@ -151,6 +147,20 @@ export default async function Page() {
               </div>
             </div>
           </div>
+        </section>
+
+        <section className="mb-20 mt-20 ">
+          <h2 className=" text-center text-4xl max-sm:text-3xl font-semibold leading-normal text-primary">
+            Some testimonials from our <br /> valuable clients
+          </h2>
+<div className=" flex justify-center mt-14 max-sm:mt-8 ">
+
+<InfiniteMovingCards
+            items={testimonials}
+            direction="right"
+            speed="slow"
+          />
+</div>
         </section>
       </div>
     </main>

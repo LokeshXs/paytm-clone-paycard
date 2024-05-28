@@ -1,5 +1,6 @@
 import express from "express";
 import db from "@repo/database/client"
+import {BASE_URL} from "@repo/web/baseurl";
 import cors from "cors";
 
 const app = express();
@@ -7,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin:"http://localhost:3000"
+  origin:BASE_URL
 }))
 
 
@@ -42,7 +43,7 @@ app.post("/webhook", async (req, res) => {
       message: "Captured",
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     res.status(411).json({
       message: "Error while processing the webhook",

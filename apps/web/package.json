@@ -10,8 +10,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@repo/database": "*",
     "@repo/ui": "*",
-    "@repo/database":"*",
     "@types/bcryptjs": "^2.4.6",
     "@types/uuid": "^9.0.8",
     "bcryptjs": "^2.4.3",
@@ -22,15 +22,16 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.3.0",
+    "twilio": "^5.0.4",
     "uuid": "^9.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.1.1",
     "@repo/eslint-config": "*",
+    "@repo/schemas": "*",
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
-    "@repo/schemas":"*",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
@@ -42,8 +43,10 @@
   "exports": {
     "./signUp": "./src/actions/authentication.ts",
     "./auth": "./auth.ts",
-    "./logout":"./src/actions/logout.ts",
-    "./db":"./src/lib/db.ts",
-    "./mobilenavcontext":"./src/context/MobileNavContext.tsx"
+    "./logout": "./src/actions/logout.ts",
+    "./db": "./src/lib/db.ts",
+    "./mobilenavcontext": "./src/context/MobileNavContext.tsx",
+    "./baseurl": "./src/config/site-config.ts",
+    "./updateProfile": "./src/actions/updateProfile.ts"
   }
 }

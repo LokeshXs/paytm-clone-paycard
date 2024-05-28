@@ -10,8 +10,12 @@ import { signIn } from "../../../../auth";
 export default function SignUpPage() {
   return (
     <main className="p-12 max-md:p-6 max-sm:p-4  flex justify-center items-center min-h-screen ">
-      <div className="max-w-[1400px] w-full  ">
+      <div className="max-w-[1400px] w-full flex flex-col gap-12  ">
+      <Link href="/" className="bg-primary text-background py-2 px-4 w-fit rounded-lg max-sm:w-full max-sm:text-center" >
+        Back to home
+        </Link>
         <div className=" max-w-[1200px] w-full mx-auto flex max-md:flex-col-reverse  gap-6 max-lg:gap-12 bg-muted rounded-3xl drop-shadow-2xl">
+      
           <div className="w-[500px] max-md:w-full min-w-[260px]  flex flex-col justify-center items-center gap-12  p-6 ">
             <h1 className="text-4xl max-md:text-3xl  font-bold text-center">
               New Era of Global Payments

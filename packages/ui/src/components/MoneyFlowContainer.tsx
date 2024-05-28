@@ -32,7 +32,7 @@ export default async function MoneyFlowContainer() {
     where: {
       status: "Success",
       userId: userId,
-      startTime: {
+      timestamp: {
         gte: new Date(unixTime1200SecAgo).toISOString(),
       },
     },
@@ -65,7 +65,7 @@ export default async function MoneyFlowContainer() {
     const onRamp = oneDayDataOnRamp.map((details) => {
       if (
         new Date((Math.floor(oneDayAgo.getTime() / 1000) - time) * 1000) <
-        details.startTime
+        details.timestamp
       ) {
         return details;
       }
@@ -94,7 +94,7 @@ export default async function MoneyFlowContainer() {
         if (!currentVal) {
             return 0;
           }
-          return acc + currentVal?.Amount;
+          return acc + currentVal?.amount;
     }, 0);
 
     // Sent
@@ -114,7 +114,7 @@ export default async function MoneyFlowContainer() {
         if (!currentVal) {
             return 0;
           }
-          return acc + currentVal?.Amount;
+          return acc + currentVal?.amount;
     }, 0);
     console.log(onRampTotal); 
     console.log(receivedTotal); 

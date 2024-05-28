@@ -21,6 +21,7 @@ import { useState, useTransition } from "react";
 import SuccessMsg from "./SuccessMsg";
 import ErrorMsg from "./ErrorMsg";
 
+
 export default function SignUpForm({
   action,
 }: {
@@ -59,10 +60,14 @@ export default function SignUpForm({
   }
 
   return (
-    <Form {...form}>
+
+    <div>
+
+   
+    <Form {...form} >
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 max-w-[400px] min-w-[300px] max-sm:min-w-[260px]  w-full  mx-auto"
+        className="space-y-6 max-w-[400px] min-w-[300px] max-sm:min-w-[260px]  w-full  mx-auto "
       >
         <FormField
           control={form.control}
@@ -129,5 +134,7 @@ export default function SignUpForm({
         </div>
       </form>
     </Form>
+   
+    </div>
   );
 }

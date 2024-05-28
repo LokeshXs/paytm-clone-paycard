@@ -27,7 +27,7 @@ export default async function P2PTransactionCard({ date, amount,toUserId,fromUse
     }
   })
   return (
-    <div className="flex items-center justify-between max-w-[400px] w-full px-6 py-2 rounded-2xl bg-muted">
+    <div className="flex items-center justify-around  w-full px-6 py-2 rounded-2xl bg-muted">
       <div className="space-y-1 ">
         <div className="space-y-2 ">
           <p className="text-primary font-semibold text-xl">{status}</p>

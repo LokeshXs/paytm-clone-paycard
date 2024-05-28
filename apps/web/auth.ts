@@ -13,6 +13,7 @@ declare module "next-auth" {
   interface Session {
     /** The user's postal address. */
     userId: string;
+
   }
 }
 
@@ -55,13 +56,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+ 
       return true;
     },
 
     async session({ session, user, token }) {
       // console.log(token);
       session.userId = token.sub!;
+    
+      
       return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+   
+      return token
     },
     async redirect({ url, baseUrl }) {
       return "/myaccount/dashboard";
@@ -71,7 +79,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   events: {
     async signIn({ isNewUser, user }) {
-      // console.log("Is new user", isNewUser);
 
       if (isNewUser) {
         await db.balance.create({

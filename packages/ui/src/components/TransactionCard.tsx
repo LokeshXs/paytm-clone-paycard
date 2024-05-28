@@ -6,6 +6,7 @@ import { formattCurrency } from "../lib/formatting";
 import db from "@repo/web/db";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
+import {BASE_URL} from "@repo/web/baseurl";
 
 type TransactionCardProps = {
   transactionId: string;
@@ -21,55 +22,35 @@ export default function TransactionCard({
   amount,
   cardId,
 }: TransactionCardProps) {
-  console.log(status);
+
   const [transactionStatus, setTransactionStatus] = useState(status);
   const router = useRouter();
   const formattedAmount = formattCurrency(amount);
 
-  // useEffect(() => {
-  //   const fetchStatus = async () => {
-  //     const res = await fetch(
-  //       `http://localhost:3000/api/transaction/${transactionId}`,
-  //       {
-  //         cache: "no-store",
-  //       }
-  //     );
-
-  //     const data = await res.json();
-
-  //     setTransactionStatus(data.status);
-  //   };
-
-  //   fetchStatus();
-  // }, []);
 
   if (transactionStatus === "Processing" || transactionStatus === "") {
     const intervalId = setInterval(async () => {
      
       const res = await fetch(
-        `http://localhost:3000/api/transaction/${transactionId}`,
+        `${BASE_URL}/api/transaction/${transactionId}`,
         {
           cache: "no-store",
         }
       );
 
       const data = await res.json();
+   
 
-      setTransactionStatus(data.status);
-      if(data.status !== "Processing"){
+     
+      if(data.data.status !== "Processing"){
+        setTransactionStatus(data.data.status);
         clearInterval(intervalId);
         router.refresh();
       }
-
-     
     }, 5000);
   }
 
-  // if(transactionStatus === ""){
-  //   return (
-  //     <div>Fetching</div>
-  //   )
-  // }
+  
 
   return (
     <div className="flex items-center justify-around w-full bg-muted px-6 py-2 rounded-2xl">

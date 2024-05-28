@@ -46,14 +46,7 @@ export default function SignInForm({
     setSuccessMsg("");
     setErrorMsg("");
     startTransition(() => {
-      action(values).then((response) => {
-        if (response.status === "success") {
-          setSuccessMsg(response.message);
-        }
-        if (response.status === "error") {
-          setErrorMsg(response.message);
-        }
-      });
+      action(values);
     });
   }
 
@@ -91,7 +84,7 @@ export default function SignInForm({
         />
         <div className="space-y-2">
           <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? "Signing up" : "Sign In"}
+            {isPending ? "Signing in" : "Sign In"}
           </Button>
           {successMsg && <SuccessMsg message={successMsg} />}
           {errorMsg && <ErrorMsg message={errorMsg} />}
