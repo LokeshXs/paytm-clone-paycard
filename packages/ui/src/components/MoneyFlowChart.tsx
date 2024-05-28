@@ -27,7 +27,6 @@ ChartJS.register(
 
 
 export default function MoneyflowChart({chartData}:{chartData:number[]}){
-console.log(chartData);
     const options = {
         responsive:true,
         maintainAspectRatio: false,
@@ -59,6 +58,7 @@ console.log(chartData);
           label: "Balance",
           data: chartData,
           tension: 0.3,
+          
           borderColor: '#004852',
       backgroundColor: '#ccdadc',
       pointBackgroundColor:"#e3ff57",

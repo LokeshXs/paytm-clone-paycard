@@ -8,6 +8,7 @@ import { Eye, EyeOff } from "lucide-react";
 
 type Props = {
   isPending: boolean;
+  isdisabled? : boolean;
   field: ControllerRenderProps<
     {
       email: string;
@@ -26,7 +27,7 @@ type Props = {
 >;
 };
 
-export default function PasswordInput({ isPending, field }: Props) {
+export default function PasswordInput({ isPending, field,isdisabled }: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -35,7 +36,7 @@ export default function PasswordInput({ isPending, field }: Props) {
         placeholder="Password"
         type={showPassword ? "text" : "password"}
         className=" pr-12"
-        disabled={isPending}
+        disabled={isPending || isdisabled}
         {...field}
       />
       <Button

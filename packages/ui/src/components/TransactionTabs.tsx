@@ -18,7 +18,7 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
   });
 
   const sortedOnRampTransactions = onRampTransactions.sort((a, b) => {
-    return new Date(b.startTime).getTime() - new Date(a.startTime).getTime();
+    return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
   });
 
   const p2pTransactions = await db.p2pTransfers.findMany({
@@ -65,7 +65,7 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
           value="all"
           className="data-[state=active]:bg-secondary text-secondary data-[state=active]:text-primary  "
         >
-          All Transactions
+          Wallet Transactions
         </TabsTrigger>
         <TabsTrigger
           value="p2p"
@@ -90,21 +90,28 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="all" className=" max-h-[600px] overflow-y-auto">
+      {sortedOnRampTransactions.length === 0 && <div className=" flex justify-center pt-6">
+      <p className=" text-muted-foreground">No transaction made yet</p>
+    </div>}
         <ul className="space-y-6">
           {sortedOnRampTransactions.map((transactionDetails) => (
             <li key={transactionDetails.id}>
               <TransactionCard
                 transactionId={transactionDetails.id}
                 status={transactionDetails.status}
-                date={transactionDetails.startTime}
+                date={transactionDetails.timestamp}
                 amount={transactionDetails.amount}
                 cardId={transactionDetails.paymentCardId || ""}
+                key={transactionDetails.id}
               />
             </li>
           ))}
         </ul>
       </TabsContent>
       <TabsContent value="p2p">
+      {sortedP2pTransactions.length === 0 && <div className=" flex justify-center pt-6">
+      <p className=" text-muted-foreground">No transaction made yet</p>
+    </div>}
         <ul className="space-y-6">
           {sortedP2pTransactions.map((transactionDetails) => {
             if (session?.userId === transactionDetails.toUserId) {
@@ -113,7 +120,7 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
                   <li key={transactionDetails.id}>
                     <P2PTransactionCard
                       date={transactionDetails.timestamp}
-                      amount={transactionDetails.Amount}
+                      amount={transactionDetails.amount}
                       fromUserId={transactionDetails.fromUserId}
                       toUserId={transactionDetails.toUserId}
                       userId={session?.userId || ""}
@@ -127,7 +134,7 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
                 <li key={transactionDetails.id}>
                   <P2PTransactionCard
                     date={transactionDetails.timestamp}
-                    amount={transactionDetails.Amount}
+                    amount={transactionDetails.amount}
                     fromUserId={transactionDetails.fromUserId}
                     toUserId={transactionDetails.toUserId}
                     userId={session?.userId || ""}
@@ -140,12 +147,15 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
         </ul>
       </TabsContent>
       <TabsContent value="sent">
+      {sortedP2pSentTransactions.length === 0 && <div className=" flex justify-center pt-6">
+      <p className=" text-muted-foreground">No transaction made yet</p>
+    </div>}
         <ul className="space-y-6">
           {sortedP2pSentTransactions.map((transactionDetails) => (
             <li key={transactionDetails.id}>
               <P2PTransactionCard
                 date={transactionDetails.timestamp}
-                amount={transactionDetails.Amount}
+                amount={transactionDetails.amount}
                 fromUserId={transactionDetails.fromUserId}
                 toUserId={transactionDetails.toUserId}
                 userId={session?.userId || ""}
@@ -156,6 +166,9 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
         </ul>
       </TabsContent>
       <TabsContent value="received">
+      {sortedP2pReceivedTransactions.length === 0 && <div className=" flex justify-center pt-6">
+      <p className=" text-muted-foreground">No transaction made yet</p>
+    </div>}
         <ul className="space-y-6">
           {sortedP2pReceivedTransactions.map((transactionDetails) => {
             if (session?.userId === transactionDetails.toUserId) {
@@ -164,7 +177,7 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
                   <li key={transactionDetails.id}>
                     <P2PTransactionCard
                       date={transactionDetails.timestamp}
-                      amount={transactionDetails.Amount}
+                      amount={transactionDetails.amount}
                       fromUserId={transactionDetails.fromUserId}
                       toUserId={transactionDetails.toUserId}
                       userId={session?.userId || ""}
@@ -178,7 +191,7 @@ export default async function TransactionTabs({ defaultSelection }: Props) {
                 <li key={transactionDetails.id}>
                   <P2PTransactionCard
                     date={transactionDetails.timestamp}
-                    amount={transactionDetails.Amount}
+                    amount={transactionDetails.amount}
                     fromUserId={transactionDetails.fromUserId}
                     toUserId={transactionDetails.toUserId}
                     userId={session?.userId || ""}

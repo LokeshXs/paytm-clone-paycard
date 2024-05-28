@@ -5,13 +5,14 @@ import db from "../lib/db";
 import { auth } from "../../auth";
 import { revalidatePath } from "next/cache";
 import { v4 as uuidv4 } from "uuid";
+import { BASE_URL, WEBHOOK_URL } from "../config/site-config";
 
 export async function addMoney(values: z.infer<typeof addMoneyFormSchema>) {
   try {
     const session = await auth();
     const userId = session?.userId;
 
-    console.log(values);
+
 
     // 1.) zod validation
 
@@ -34,7 +35,7 @@ export async function addMoney(values: z.infer<typeof addMoneyFormSchema>) {
       data: {
         status: "Processing",
         amount: amountInNumber,
-        startTime: new Date(),
+        timestamp: new Date(),
         userId: userId!,
         token: uuidv4(),
         paymentCardId: bank,
@@ -44,7 +45,7 @@ export async function addMoney(values: z.infer<typeof addMoneyFormSchema>) {
     revalidatePath("/dashboard");
     // console.log(transactionDetails);
     setTimeout(async () => {
-      await fetch("http://localhost:3001/webhook", {
+      await fetch(`${WEBHOOK_URL}/webhook`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -92,7 +92,7 @@ model onRampTransactions {
   status        OnRampStatus
   token         String        @unique
   amount        Int
-  startTime     DateTime
+  timestamp     DateTime
   userId        String
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   paymentCard   paymentCards? @relation(fields: [paymentCardId], references: [cardNumber])
@@ -103,7 +103,7 @@ model p2pTransfers {
   id         String   @id @default(cuid())
   toUserId   String
   fromUserId String
-  Amount     Int
+  amount     Int
   status     String   @default("Success")
   toUser     User     @relation("TransferToUser", fields: [toUserId], references: [id])
   fromUser   User     @relation("TransferFromUser", fields: [fromUserId], references: [id])

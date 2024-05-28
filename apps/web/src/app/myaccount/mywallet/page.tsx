@@ -93,7 +93,7 @@ export default async function DashboardView() {
           <div className="w-full py-6 px-8 rounded-2xl space-y-6  ">
             <h2 className="text-2xl font-semibold text-primary">Quick Links</h2>
             <div className="flex justify-around gap-2 flex-wrap">
-              <Link href="/">
+              <Link href="/myaccount/dashboard">
                 <div className="flex flex-col items-center border py-4 px-6 rounded-2xl hover:bg-muted min-w-40 ">
                   <div className="p-4 bg-muted text-primary w-fit rounded-full ">
                     <LayoutDashboard />
@@ -102,7 +102,7 @@ export default async function DashboardView() {
                 </div>
               </Link>
 
-              <Link href="/">
+              <Link href="/myaccount/p2ptransfer">
                 <div className="flex flex-col items-center border py-4 px-6 rounded-2xl hover:bg-muted min-w-40  ">
                   <div className="p-4 bg-muted text-primary w-fit rounded-full ">
                     <SmartphoneNfc />
@@ -111,7 +111,7 @@ export default async function DashboardView() {
                 </div>
               </Link>
 
-              <Link href="/">
+              <Link href="/myaccount/transactions">
                 <div className="flex flex-col items-center border py-4 px-6 rounded-2xl hover:bg-muted min-w-40  ">
                   <div className="p-4 bg-muted text-primary w-fit rounded-full ">
                     <ScrollText />
@@ -120,7 +120,7 @@ export default async function DashboardView() {
                 </div>
               </Link>
 
-              <Link href="/">
+              <Link href="/myaccount/dashboard">
                 <div className="flex flex-col items-center border py-4 px-6 rounded-2xl hover:bg-muted min-w-40  ">
                   <div className="p-4 bg-muted text-primary w-fit rounded-full ">
                     <AreaChart />

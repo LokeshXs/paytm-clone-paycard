@@ -16,6 +16,7 @@
     "@types/express": "^4.17.21",
     "@prisma/client": "^5.12.1",
     "@repo/database":"*",
+    "@repo/web":"*",
     "cors": "^2.8.5",
     "esbuild": "^0.20.2",
     "express": "^4.19.2"

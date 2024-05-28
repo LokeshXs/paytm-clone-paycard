@@ -57,7 +57,6 @@ export async function signUp(values: z.infer<typeof SignUpSchema>) {
       },
     });
 
-
     // Initialising the user with Zero balance
     await db.balance.create({
       data: {
@@ -66,6 +65,7 @@ export async function signUp(values: z.infer<typeof SignUpSchema>) {
         locked: 0,
       },
     });
+
 
     return {
       status: "success",
@@ -119,7 +119,7 @@ export async function signInAction(values: z.infer<typeof SignInSchema>) {
       message: "Successfully Signed in",
     };
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     if (error instanceof AuthError) {
       switch (error.type) {

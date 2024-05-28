@@ -113,7 +113,7 @@ export default async function TransferMoney(
           data: {
             toUserId: toUser.id,
             fromUserId: session.userId,
-            Amount: Number(validatedValues.data.amount) * 100,
+            amount: Number(validatedValues.data.amount) * 100,
             status: "Success",
           },
         });
@@ -133,7 +133,7 @@ export default async function TransferMoney(
         data: {
           toUserId: toUser.id,
           fromUserId: session.userId,
-          Amount: Number(validatedValues.data.amount) * 100,
+          amount: Number(validatedValues.data.amount) * 100,
           status: "Failed",
         },
       });
